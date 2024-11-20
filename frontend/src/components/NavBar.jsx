@@ -1,54 +1,68 @@
 import React, { useState } from "react";
 import { assets } from "../assets/assets_frontend/assets";
 import { NavLink, useNavigate } from "react-router-dom";
+import { FaHome } from "react-icons/fa"; // Import the FaHome icon
 
 const NavBar = () => {
   const navigator = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
-  const [token, setToken] = useState(true);
+  const [token] = useState(true); // Assuming token is always true for this example
+
+  const toggleMenu = () => setShowMenu((prev) => !prev);
 
   return (
-    <div className="flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400">
-      <img className="w-44 cursor-pointer" src={assets.logo} alt="logo" />
-      <ul className="hidden md:flex items-start gap-5 font-medium">
-        <NavLink to="/">
-          <li className="py-1">Home</li>
-          <hr className="border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden" />
-        </NavLink>
-        <NavLink to="/doctors">
-          <li className="py-1">Doctors</li>
-          <hr className="border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden" />
-        </NavLink>
-        <NavLink to="/contact">
-          <li className="py-1">Contact</li>
-          <hr className="border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden" />
-        </NavLink>
-        <NavLink to="/about">
-          <li className="py-1">About</li>
-          <hr className="border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden" />
-        </NavLink>
+    <nav className="flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400">
+      <img 
+        className="w-44 cursor-pointer" 
+        src={assets.logo} 
+        alt="logo" 
+        onClick={() => navigator('/')} 
+      />
+      <ul className="hidden md:flex items-start gap-5 font-medium relative">
+        {["/", "/doctors", "/contact", "/about"].map((path, index) => (
+          <NavLink 
+            key={index} 
+            to={path} 
+            className={({ isActive }) => 
+              `relative flex items-center px-2 py-2 ${
+                isActive 
+                  ? 'bg-[#dfe0e5] border-l-2 border-blue-500' 
+                  : 'text-gray-700 hover:bg-gray-200'
+              }`
+            }
+          >
+            {path === '/' ? <FaHome className="mr-2 color-primary" style={{ color: '#1F51FF' }} /> : null} {/* Set color for the icon */}
+            {path.replace('/', '') || 'Home'}
+            {({ isActive }) => (
+              isActive && (
+                <span className="absolute bottom-[-4px] left-0 w-full h-[2px] bg-gray"></span>
+              )
+            )}
+          </NavLink>
+        ))}
       </ul>
       <div className="flex items-center gap-4">
         {token ? (
-          <div className="flex items-center gap-2 cursor-pointer relative group">
-          <img
+          <div className="flex items-center gap-2 cursor-pointer relative group" onClick={toggleMenu}>
+            <img
               className="w-8 rounded-full"
               src={assets.profile_pic}
               alt="profile pic"
             />
-            
-             <img
+            <img
               className="w-2.5"
               src={assets.dropdown_icon}
               alt="dropdown icon"
             />
-            <div className="absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20 hidden group-hover:block">
+            {showMenu && (
+              <div className="absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20">
                 <div className="min-w-48 bg-stone-100 rounded flex flex-col gap-4 p-4">
-                    <p className="hover:text-black cursor-pointer">My Profile</p>
-                    <p className="hover:text-black cursor-pointer">My Appointments</p>
-                    <p className="hover:text-black cursor-pointer">Logout</p>
+                  <p className="hover:text-black cursor-pointer">My Profile</p>
+                  <p className="hover:text-black cursor-pointer">My Appointments</p>
+                  <p className="hover:text-black cursor-pointer">Logout</p>
                 </div>
-            </div>
+              </div>
+            )}
           </div>
         ) : (
           <button
@@ -59,7 +73,7 @@ const NavBar = () => {
           </button>
         )}
       </div>
-    </div>
+    </nav>
   );
 };
 

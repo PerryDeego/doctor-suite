@@ -2,8 +2,10 @@ import React from "react";
 import { assets } from "../assets/assets_frontend/assets";
 
 const Header = () => {
+  const { group_profiles, arrow_icon, header_img } = assets;
+
   return (
-    <div className="flex flex-col md:flex-row flex-wrap bg-primary rounded-lg px-6 md:px-10 lg:px-20">
+    <header className="flex flex-col md:flex-row flex-wrap bg-primary rounded-lg px-6 md:px-10 lg:px-20">
       {/* Left Section */}
       <div className="md:w-1/2 flex flex-col items-start justify-center gap-4 py-10 md:py-[10vw] md:mb-[-30px]">
         <h1 className="text-3xl md:text-4xl lg:text-5xl text-white font-semibold leading-tight">
@@ -12,8 +14,8 @@ const Header = () => {
         <div className="flex flex-col md:flex-row items-center gap-3 text-white text-sm font-light">
           <img 
             className="w-28" 
-            src={assets.group_profiles} 
-            alt="group profiles" 
+            src={group_profiles} 
+            alt="Group of doctors" 
             loading="lazy" 
           />
           <p>
@@ -28,8 +30,8 @@ const Header = () => {
           Book appointment
           <img 
             className="w-3" 
-            src={assets.arrow_icon} 
-            alt="arrow icon" 
+            src={arrow_icon} 
+            alt="Arrow icon" 
             loading="lazy"
           />
         </a>
@@ -39,12 +41,12 @@ const Header = () => {
       <div className="md:w-1/2 relative">
         <img
           className="w-full md:absolute bottom-0 h-auto rounded-lg"
-          src={assets.header_img}
-          alt="hero bg"
+          src={header_img}
+          alt="Hero background"
           loading="lazy"
         />
       </div>
-    </div>
+    </header>
   );
 };
 

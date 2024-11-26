@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { FaHome } from "react-icons/fa"; // Import the FaHome icon
 
 const NavBar = () => {
-  const navigator = useNavigate();
+  const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [token] = useState(true); // Assuming token is always true for this example
 
@@ -16,10 +16,10 @@ const NavBar = () => {
         className="w-44 cursor-pointer" 
         src={assets.logo} 
         alt="logo" 
-        onClick={() => navigator('/')} 
+        onClick={() => navigate('/')} 
       />
       <ul className="hidden md:flex items-start gap-5 font-medium relative">
-        {["/", "/doctors", "/contact", "/about"].map((path, index) => (
+        {["/", "/DOCTORS", "/CONTACT", "/ABOUT"].map((path, index) => (
           <NavLink 
             key={index} 
             to={path} 
@@ -31,12 +31,10 @@ const NavBar = () => {
               }`
             }
           >
-            {path === '/' ? <FaHome className="mr-2 color-primary" style={{ color: '#1F51FF' }} /> : null} {/* Set color for the icon */}
-            {path.replace('/', '') || 'Home'}
-            {({ isActive }) => (
-              isActive && (
-                <span className="absolute bottom-[-4px] left-0 w-full h-[2px] bg-gray"></span>
-              )
+            {path === '/' ? <FaHome className="mr-2 color-primary" style={{ color: '#1F51FF' }} /> : null}
+            {path.replace('/', '') || 'HOME'}
+            {({ isActive }) => isActive && (
+              <span className="absolute bottom-[-4px] left-0 w-full h-[2px] bg-gray"></span>
             )}
           </NavLink>
         ))}
@@ -56,8 +54,8 @@ const NavBar = () => {
             />
             {showMenu && (
               <div className="absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20">
-                <div className="min-w-48 bg-stone-100 rounded flex flex-col gap-4 p-4">
-                  <p className="hover:text-black cursor-pointer">My Profile</p>
+                <div className="min-w-48 bg-blue-100 rounded flex flex-col gap-4 p-4">
+                  <p className="hover:text-black cursor-pointer" onClick={() => navigate('/my-profile')}>My Profile</p>
                   <p className="hover:text-black cursor-pointer">My Appointments</p>
                   <p className="hover:text-black cursor-pointer">Logout</p>
                 </div>
@@ -67,7 +65,7 @@ const NavBar = () => {
         ) : (
           <button
             className="bg-primary text-white px-8 py-3 rounded-full font-light hidden md:block"
-            onClick={() => navigator("/login")}
+            onClick={() => navigate("/login")} // Fixed navigate function call
           >
             Create account
           </button>

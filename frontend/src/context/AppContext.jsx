@@ -1,27 +1,23 @@
-import React, { createContext, useState } from "react";
+import React, { createContext } from "react";
 import PropTypes from "prop-types"; // Import PropTypes
 import { doctors } from "../assets/assets_frontend/assets";
 
 // Create the context
 export const AppContext = createContext();
 
+const current ='$';
+
 const AppContextProvider = ({ children }) => {
-  // You can initialize the context value with the doctors data or any other state
-  const [data, setData] = useState(doctors); 
-
-  // Define the value to be passed to context
-  const value = { data, setData };
-
   return (
-    <AppContext.Provider value={value}>
+    <AppContext.Provider value={{ doctors, current }}>
       {children}
     </AppContext.Provider>
   );
 };
 
-// Define prop types
+// Define PropTypes for AppContextProvider
 AppContextProvider.propTypes = {
-  children: PropTypes.node.isRequired, // Specify that children is required
+  children: PropTypes.node.isRequired,
 };
 
 export default AppContextProvider;

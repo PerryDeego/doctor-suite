@@ -1,24 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 
-const TopSpecialist = () => {
-  const navigate = useNavigate();
+const DoctorCategory = ({ speciality, docId }) => {
   const { doctors } = useContext(AppContext);
+  const [ docsCategory, setDocsCategory ] = useState([]);
+  const navigate = useNavigate();
 
-  // Check if doctors is defined and is an array
-  if (!Array.isArray(doctors)) {
-    return <div><p>Loading Doctors...</p></div>; // or some other loading state
-  }
-
-  if (doctors.length === 0) {
-    return <div><p>No doctors available at the moment.</p></div>; // Handle empty array
-  }
-
-  const handleDoctorClick = (id) => {
-    navigate(`/appointment/${id}`);
-    window.scrollTo(0, 0); // Ensure page scrolls to top when navigating
-  };
+  useEffect(() => {
+    if (doctors.length > 0 && speciality ) {
+      const doctorsInfo = doctors.filter( (doc) => doc.speciality === speciality && doc.id === docId );
+      setDocsCategory(doctorsInfo);
+    }
+  }, [doctors, speciality, docId]);
 
   return (
     <div className="flex flex-col items-center gap-4 my-16 text-gray-900 md:mx-10">
@@ -32,11 +26,12 @@ const TopSpecialist = () => {
       
       {/* Doctors List */}
       <div className="w-full grid grid-cols-auto gap-4 pt-5 px-3 sm:px-0">
-        {doctors.slice(0, 10).map((item) => (
+        {
+          docsCategory.slice(0, 5).map((item) => (
           <div
-            key={item.id} // Ensure you're using the correct unique key based on your data structure
+            key={item.id}
             className="relative border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500"
-            onClick={() => handleDoctorClick(item.id)} // calling the click handler
+            onClick={() => {navigate(`/appointment/${item.id}`), scrollTo(0, 0) }}
           >
             {/* Doctor Image */}
             <img className="w-full h-48 object-cover bg-blue-50" src={item.image} alt={`Doctor ${item.name}`}/>
@@ -61,7 +56,7 @@ const TopSpecialist = () => {
         className="bg-blue-50 text-gray-600 px-12 py-3 rounded-full mt-10 hover:bg-blue-100 transition-colors duration-300 hover:text-primary"
         onClick={() => {
           navigate('/doctors');
-          window.scrollTo(0, 0); // Ensure page scrolls to top
+          window.scrollTo(0, 0);
         }}
         aria-label="View more doctors" // Added aria-label for accessibility
       >
@@ -71,4 +66,4 @@ const TopSpecialist = () => {
   );
 };
 
-export default TopSpecialist;
+export default DoctorCategory;

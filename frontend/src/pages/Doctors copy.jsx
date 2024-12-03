@@ -12,13 +12,11 @@ const Doctors = () => {
   console.log(speciality);
 
   const filterSpeciality= () => {
-    if (Array.isArray(doctors)) {
       if (speciality) {
-        setFilterDoc(doctors.filter(doc => doc.speciality.toLowerCase() === decodeURIComponent(speciality.replace(/-/g, ' '))));
+        setFilterDoc(doctors.filter(doc => doc.speciality.toLowerCase() === speciality))
       } else {
         setFilterDoc(doctors);
       }
-    }
   };
   
   useEffect(() => {

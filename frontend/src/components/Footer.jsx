@@ -28,7 +28,7 @@ const Footer = () => {
 
         {/* Center Section */}
         <div>
-          <p className="text-xl font-medium mb-5">COMPANY</p>
+          <p className="text-xl text-indigo-600 font-medium mb-5">COMPANY</p>
           <ul className="flex flex-col gap-2 text-gray-600">
             {companyLinks.map((link, index) => (
               <li key={index}>{link}</li>
@@ -38,7 +38,7 @@ const Footer = () => {
 
         {/* Right Section */}
         <div>
-          <p className="text-xl font-medium mb-5">GET IN TOUCH</p>
+          <p className="text-xl  text-indigo-600 font-medium mb-5">GET IN TOUCH</p>
           <ul className="flex flex-col gap-2 text-gray-600">
             {contactInfo.map((info, index) => (
               <li key={index}>{info}</li>

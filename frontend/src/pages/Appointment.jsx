@@ -2,16 +2,16 @@ import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import { assets } from "../assets/assets_frontend/assets";
-import DoctorCategory from "../components/DoctorCategory";
+import DoctorsDivision from "../components/DoctorsDivision";
 
 const Appointment = () => {
   const { docId } = useParams();
-  const { currencySymbol, daysOfWeek, doctors } = useContext(AppContext);
+  const { currencySymbol, daysOfWeek, doctors } = useContext( AppContext );
 
-  const [docInfo, setDocInfo] = useState(null);
-  const [docSlots, setDocSlots] = useState([]);
-  const [slotIndex, setSlotIndex] = useState(0);
-  const [slotTime, setSlotTime] = useState("");
+  const [ docInfo, setDocInfo ] = useState(null);
+  const [ docSlots, setDocSlots ] = useState([]);
+  const [ slotIndex, setSlotIndex ] = useState(0);
+  const [ slotTime, setSlotTime ] = useState("");
   
 
   const fetchDocInfo = () => {
@@ -189,8 +189,8 @@ const Appointment = () => {
         Book an Appointment
       </button>
 
-      {/* Doctor View Component */}
-      <DoctorCategory docId={docId} speciality={docInfo.speciality} />
+      {/* Doctors Division View Component */}
+      <DoctorsDivision docId={ docId } speciality={ docInfo.speciality } />
     </div>
   );
 };

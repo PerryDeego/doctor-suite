@@ -2,17 +2,18 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 
-const DoctorCategory = ({ speciality, docId }) => {
-  const { doctors } = useContext(AppContext);
+const DoctorsDivision = ({ speciality, docId }) => {
+
+  const { doctors } = useContext( AppContext );
   const [ docsCategory, setDocsCategory ] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (doctors.length > 0 && speciality ) {
-      const doctorsInfo = doctors.filter( (doc) => doc.speciality === speciality && doc.id === docId );
+    if ( doctors.length > 0 && speciality ) {
+      const doctorsInfo = doctors.filter( (doc) => doc.speciality === speciality && doc.id !== docId );
       setDocsCategory(doctorsInfo);
     }
-  }, [doctors, speciality, docId]);
+  }, [ doctors, speciality, docId ]);
 
   return (
     <div className="flex flex-col items-center gap-4 my-16 text-gray-900 md:mx-10">
@@ -31,7 +32,7 @@ const DoctorCategory = ({ speciality, docId }) => {
           <div
             key={item.id}
             className="relative border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500"
-            onClick={() => {navigate(`/appointment/${item.id}`), scrollTo(0, 0) }}
+            onClick={() => { navigate(`/appointment/${item.id}`), scrollTo(0, 0) }}
           >
             {/* Doctor Image */}
             <img className="w-full h-48 object-cover bg-blue-50" src={item.image} alt={`Doctor ${item.name}`}/>
@@ -66,4 +67,4 @@ const DoctorCategory = ({ speciality, docId }) => {
   );
 };
 
-export default DoctorCategory;
+export default DoctorsDivision;

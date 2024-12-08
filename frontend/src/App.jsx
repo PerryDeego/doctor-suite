@@ -10,6 +10,7 @@ import MyAppointments from './pages/MyAppointments';
 import MyProfile from './pages/MyProfile';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
+import BackToTop from './components/BackToTop';
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
         <Route path='/appointment/:docId' element={<Appointment />} />
         <Route path='/my-appointments' element={<MyAppointments />} />
       </Routes>
+      <BackToTop />
       <Footer />
     </div>
   );

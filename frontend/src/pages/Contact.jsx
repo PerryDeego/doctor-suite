@@ -36,7 +36,7 @@ const Contact = () => {
     <div className='flex flex-col items-center text-center p-5'>
       <div className="text-center mb-16">
         <p className="mt-4 text-sm leading-7 text-gray-500 font-regular uppercase">Contact Us</p>
-        <h3 className="text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900">Get In <span className="text-indigo-600">Touch</span></h3>
+        <h3 className="text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900">Get In <span className="text-primary">Touch</span></h3>
       </div>
       
       <div className="relative overflow-hidden mt-6 max-w-6xl mx-auto bg-primary-gradient justify-around items-center">

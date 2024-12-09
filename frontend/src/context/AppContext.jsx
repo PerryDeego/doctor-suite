@@ -1,6 +1,6 @@
 import React, { createContext } from "react";
 import PropTypes from "prop-types";
-import { doctors } from "../assets/assets_frontend/assets";
+import { assets, doctors, specialityData } from "../assets/assets_frontend/assets";
 
 // Create the context
 export const AppContext = createContext();
@@ -20,7 +20,7 @@ const specialties = [
 
 const AppContextProvider = ({ children }) => {
     return (
-        <AppContext.Provider value={{ daysOfWeek, doctors, currencySymbol, specialties }}>
+        <AppContext.Provider value={{ assets, daysOfWeek, doctors, currencySymbol, specialties, specialityData }}>
             {children}
         </AppContext.Provider>
     );

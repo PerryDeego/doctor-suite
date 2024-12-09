@@ -3,17 +3,22 @@ import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 
 const DoctorsDivision = ({ speciality, docId }) => {
-
-  const { doctors } = useContext( AppContext );
-  const [ docsCategory, setDocsCategory ] = useState([]);
+  const { doctors } = useContext(AppContext);
+  const [docsCategory, setDocsCategory] = useState([]);
   const navigate = useNavigate();
 
+  // Fetch doctors based on selected speciality and exclude the current doctor
   useEffect(() => {
-    if ( doctors.length > 0 && speciality ) {
-      const doctorsInfo = doctors.filter( (doc) => doc.speciality === speciality && doc.id !== docId );
+    if (doctors.length > 0 && speciality) {
+      const doctorsInfo = doctors.filter((doc) => doc.speciality === speciality && doc.id !== docId);
       setDocsCategory(doctorsInfo);
     }
-  }, [ doctors, speciality, docId ]);
+  }, [doctors, speciality, docId]);
+
+  // Fallback image for when the original image fails to load
+  const handleImageError = (e) => {
+    e.target.src = 'path/to/placeholder-image.jpg'; // Replace with your placeholder image path
+  };
 
   return (
     <div className="flex flex-col items-center gap-4 my-16 text-gray-900 md:mx-10">
@@ -27,15 +32,19 @@ const DoctorsDivision = ({ speciality, docId }) => {
       
       {/* Doctors List */}
       <div className="w-full grid grid-cols-auto gap-4 pt-5 px-3 sm:px-0">
-        {
-          docsCategory.slice(0, 5).map((item) => (
+        {docsCategory.slice(0, 5).map((item) => (
           <div
             key={item.id}
             className="relative border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500"
-            onClick={() => { navigate(`/appointment/${item.id}`), scrollTo(0, 0) }}
+            onClick={() => { navigate(`/appointment/${item.id}`), scrollTo(0, 0); }}
           >
             {/* Doctor Image */}
-            <img className="w-full h-48 object-cover bg-blue-50" src={item.image} alt={`Doctor ${item.name}`}/>
+            <img 
+              className="w-full h-48 object-cover bg-blue-50" // Ensure image covers the container
+              src={item.image} 
+              alt={`Doctor ${item.name}`} 
+              onError={handleImageError} // Handle image loading error
+            />
             
             {/* Doctor Details with Blue Overlay on Hover */}
             <div className="relative p-4 flex flex-col gap-2">

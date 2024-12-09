@@ -24,7 +24,7 @@ const About = () => {
       <div className="container mx-auto">
         <div className="text-center mb-16">
           <p className="mt-4 text-sm leading-7 text-gray-500 font-regular uppercase">About Us</p>
-          <h2 className="text-4xl sm:text-5xl leading-normal font-extrabold tracking-tight text-gray-900">Welcome to <span className="text-indigo-600">Doctor Suites</span></h2>
+          <h2 className="text-4xl sm:text-5xl leading-normal font-extrabold tracking-tight text-gray-900">Welcome to <span className="text-primary">Doctor Suites</span></h2>
           <p className="text-lg text-gray-600 mt-4">
             Where a diverse range of medical professionals provide specialized care tailored to meet the unique needs of each patient.
           </p>

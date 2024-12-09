@@ -5,17 +5,16 @@ import { assets } from "../assets/assets_frontend/assets";
 import DoctorsDivision from "../components/DoctorsDivision";
 
 const Appointment = () => {
-  const { docId } = useParams();
-  const { currencySymbol, daysOfWeek, doctors } = useContext( AppContext );
+  const { docId } = useParams(); // Get the doctor ID from URL parameters
+  const { currencySymbol, daysOfWeek, doctors } = useContext(AppContext); // Access context values
 
-  const [ docInfo, setDocInfo ] = useState(null);
-  const [ docSlots, setDocSlots ] = useState([]);
-  const [ slotIndex, setSlotIndex ] = useState(0);
-  const [ slotTime, setSlotTime ] = useState("");
-  
+  const [docInfo, setDocInfo] = useState(null); 
+  const [docSlots, setDocSlots] = useState([]); 
+  const [slotIndex, setSlotIndex] = useState(0);
+  const [slotTime, setSlotTime] = useState("");
 
+  // Fetch doctor information based on the docId
   const fetchDocInfo = () => {
-    console.log(`ID: ${docId}`)
     const foundDoc = doctors.find((doc) => doc.id === docId);
     if (foundDoc) {
       setDocInfo(foundDoc);
@@ -24,6 +23,7 @@ const Appointment = () => {
     }
   };
 
+  // Generate available time slots for the next week
   const getAvailableSlots = () => {
     const allSlots = [];
     let today = new Date();
@@ -65,22 +65,22 @@ const Appointment = () => {
   };
 
   useEffect(() => {
-    fetchDocInfo();
+    fetchDocInfo(); // Fetch doctor info when component mounts or when doctors change
   }, [doctors, docId]);
 
   useEffect(() => {
     if (docInfo) {
-      getAvailableSlots();
+      getAvailableSlots(); // Get available slots when doctor info is fetched
     }
   }, [docInfo]);
 
-  // Conditional rendering added for loading state or error
+  // Conditional rendering for loading state or error
   if (!docInfo) {
     return <div>Loading or Doctor not found...</div>;
   }
 
-  return docInfo && (
-    <div>
+  return (
+    <div className="p-4"> {/* Added padding for mobile view */}
       {/* Doctor Information */}
       <div className="flex flex-col sm:flex-row gap-4">
         <div>
@@ -90,10 +90,12 @@ const Appointment = () => {
             alt={`Doctor ${docInfo.name}`}
           />
         </div>
-        <div className="flex-1 border border-gray-400 rounded-lg p-8 py-7 bg-white mx-2 sm:mx-0 mt-[-80px] sm:mt-0">
-          <p className="flex items-center gap-2 text-2xl font-medium text-gray-900">
+        
+        {/* Doctor details container with space added only in mobile view */}
+        <div className="flex-1 border border-gray-400 rounded-lg p-4 bg-white mx-2 sm:mx-0 mt-[-80px] sm:mt-0">
+          <p className="flex items-center gap-2 text-xl font-medium text-gray-900">
             {docInfo.name}
-            <img className="w-5" src={assets.verified_icon} alt="Verified icon" />
+            <img className="w-5 mb-2 sm:mb-0" src={assets.verified_icon} alt="Verified icon" /> 
           </p>
           <div className="flex items-center gap-2 text-sm mt-1 text-gray-600">
             <p>
@@ -121,6 +123,17 @@ const Appointment = () => {
         </div>
       </div>
 
+      {/* Additional Details Section */}
+      <div className="mt-4 p-4 border border-gray-300 rounded-lg bg-white">
+        <h3 className="text-lg font-semibold">Additional Details</h3>
+        <p className="text-sm text-gray-600 mt-2">
+          Please ensure to arrive at least 10 minutes early for your appointment.
+        </p>
+        <p className="text-sm text-gray-600 mt-1">
+          If you need to reschedule or cancel your appointment, please contact us at least 24 hours in advance.
+        </p>
+      </div>
+
       {/* Available Time Slots */}
       <div className="flex flex-col items-center gap-3 w-full overflow-x-auto mt-4">
         <h3 className="text-center text-md font-semibold mb-2">
@@ -131,7 +144,7 @@ const Appointment = () => {
             docSlots.map((slot, index) => (
               <div
                 key={index}
-                className={`text-center py-6 min-w-[80px] rounded-full cursor-pointer ${
+                className={`text-center py-4 min-w-[80px] rounded-full cursor-pointer ${
                   slotIndex === index
                     ? "bg-primary text-white"
                     : "text-gray-400 border border-gray-300"
@@ -185,12 +198,13 @@ const Appointment = () => {
         </p>
       )}
 
-      <button className="mt-4 bg-primary text-white py-2 px-4 rounded-full">
+      {/* Adjusted Button Size */}
+      <button className="w-full sm:w-[40%] mt-4 bg-primary text-white py-2 px-4 rounded-full mx-auto block"> 
         Book an Appointment
       </button>
 
       {/* Doctors Division View Component */}
-      <DoctorsDivision docId={ docId } speciality={ docInfo.speciality } />
+      <DoctorsDivision docId={docId} speciality={docInfo.speciality} />
     </div>
   );
 };

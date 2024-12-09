@@ -1,8 +1,10 @@
-import React from "react";
-import { specialityData } from "../assets/assets_frontend/assets";
+import React, { useContext } from "react";
+import { AppContext } from "../context/AppContext";
 import { Link } from "react-router-dom";
 
 const SpecialityItems = () => {
+  const { specialityData } = useContext(AppContext) || { specialityData: [] }; // Default to an empty array
+
   // Function to scroll to the top of the page
   const handleScrollToTop = () => {
     window.scrollTo(0, 0); // Scroll to top when clicking a speciality
@@ -17,7 +19,7 @@ const SpecialityItems = () => {
       </p>
 
       <div className="flex sm:justify-center gap-4 pt-5 w-full overflow-x-auto">
-        {specialityData.length > 0 ? (
+        {Array.isArray(specialityData) && specialityData.length > 0 ? (
           specialityData.map((item) => (
             <Link
               className="flex flex-col items-center text-sm cursor-pointer flex-shrink-0 hover:translate-y-[10px] transition-all duration-500"

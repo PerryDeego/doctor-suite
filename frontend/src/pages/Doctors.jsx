@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/AppContext";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Doctors = () => {
     const { doctors, specialties } = useContext(AppContext);
     const [filterDoc, setFilterDoc] = useState([]);
+    const [showFilter, setShowFilter] = useState(false); // Changed to boolean
     const [selectedSpecialty, setSelectedSpecialty] = useState(null); // Track currently selected specialty
     const navigate = useNavigate();
-    const { speciality } = useParams();
 
     // Function to filter doctors based on the selected specialty
     const filterSpeciality = () => {
@@ -28,7 +28,6 @@ const Doctors = () => {
         if (selectedSpecialty === specialty) {
             // If already filtered by this specialty, clear the selection
             setSelectedSpecialty(null);
-           // navigate('/doctors'); // Optionally navigate to show all doctors
         } else {
             // Otherwise, filter by the selected specialty
             setSelectedSpecialty(specialty);
@@ -38,23 +37,31 @@ const Doctors = () => {
 
     return (
         <div className="text-center py-10">
-          <h2 className="text-4xl sm:text-5xl leading-normal font-extrabold tracking-tight text-gray-900">MEET OUR <span className="text-indigo-600">SPECIALISTS</span></h2>
-       
-            <p className="text-gray-600">Browse through our experience doctor specialty</p>
+            <h2 className="text-4xl sm:text-5xl leading-normal font-extrabold tracking-tight text-gray-900">
+                MEET OUR <span className="text-primary">SPECIALISTS</span>
+            </h2>
+            <p className="text-gray-600">Browse through our experienced doctor specialties</p>
             <div className="flex flex-col sm:flex-row items-start gap-5 mt-5">
                 {/* Specialty selection section */}
-                <div className="flex flex-col gap-4 text-sm text-gray-600">
-                <h3 className="text-center text-primary">Filter Search Here</h3>
-                    {specialties.map((spec) => (
-                        <p
-                            key={spec}
-                            className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer hover:text-primary ${selectedSpecialty === spec ? "bg-indigo-100 text-black" : ""}`}
-                            onClick={() => handleSpecialtyClick(spec)}
-                        >
-                            {spec}
-                        </p>
-                    ))}
-                </div>
+                <button 
+                    className={`border rounded text-indigo-600 p-2 transition-all sm:hidden ${showFilter ? 'bg-primary-gradient text-white' : ''}`} 
+                    onClick={() => setShowFilter(prev => !prev)}
+                >
+                    Filter Specialty Here
+                </button>
+                {showFilter && ( // Show specialties only when showFilter is true
+                    <div className="flex flex-col gap-4 text-sm text-gray-600">
+                        {specialties.map((spec) => (
+                            <p
+                                key={spec}
+                                className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer hover:text-primary ${selectedSpecialty === spec ? "bg-indigo-100 text-black" : ""}`}
+                                onClick={() => handleSpecialtyClick(spec)}
+                            >
+                                {spec}
+                            </p>
+                        ))}
+                    </div>
+                )}
 
                 {/* Doctors listing section */}
                 <div className="w-full grid grid-cols-auto gap-4 gap-y-6">

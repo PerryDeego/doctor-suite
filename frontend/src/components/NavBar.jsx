@@ -6,7 +6,7 @@ import { MdSupport, MdLocationOn, MdCall } from "react-icons/md";
 
 const NavBar = () => {
   const { assets } = useContext(AppContext); // Access assets from context
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate(); 
   const [showProfileMenu, setShowProfileMenu] = useState(false); // State for profile menu visibility
   const [showMobileMenu, setShowMobileMenu] = useState(false); // State for mobile menu visibility
   const [ token ] = useState(true); // Placeholder for authentication token

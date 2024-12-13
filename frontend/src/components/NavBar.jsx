@@ -17,25 +17,24 @@ const NavBar = () => {
 
   return (
     <div>
-      {/* Top Bar with Contact Information */}
-      <div className="hidden md:flex items-center justify-between px-4 py-2 text-sm text-primary bg-gray-100">
-        <a href="mailto:support@gmail.com" className="flex items-center">
-          <MdSupport className="mr-2" />
-          support@doctorsuites.com
-        </a>
-        
-        <span className="flex items-center">
-          <MdLocationOn className="mr-2" />
-          Address: 145 NW Ave, New York, USA
-        </span>
-        
-        <a href="tel:+23-345-67890" className="flex items-center">
-          <MdCall className="mr-2" />
-          Call Now: 
-          <span className="ml-2">+1 823-4565-13456</span>
-        </a>
-      </div>
-      
+     {/* Top Bar with Contact Information */}
+<div className="hidden md:flex items-center justify-between px-4 py-2 text-sm text-gray-600 bg-gray-100">
+  <a href="mailto:support@gmail.com" className="flex items-center">
+    <MdSupport className="mr-2 text-primary" /> {/* Change color here */}
+    support@doctorsuites.com
+  </a>
+  
+  <span className="flex items-center">
+    <MdLocationOn className="mr-2 text-blue-600" /> {/* Change color here */}
+    Address: 145 NW Ave, New York, USA
+  </span>
+  
+  <a href="tel:+23-345-67890" className="flex items-center">
+    <MdCall className="mr-2 text-blue-600" /> {/* Change color here */}
+    Call Now: 
+    <span className="ml-2">+1 823-4565-13456</span>
+  </a>
+</div>
       {/* Navigation Bar */}
       <nav className="flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400">
         {/* Logo that navigates to home */}
@@ -90,7 +89,7 @@ const NavBar = () => {
           ) : (
             // Button to create an account if not logged in
             <button
-              className="bg-primary text-white px-8 py-3 rounded-full font-light hidden md:block"
+              className="bg-primary text-white px-8 py-3 rounded-full font-light hidden hover:text-primary md:block"
               onClick={() => navigate("/login")}
             >
               Create account

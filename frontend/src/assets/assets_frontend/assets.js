@@ -1,25 +1,26 @@
 // Asset imports
-import appointment_img from "./appointment_img.png";
-import header_img from "./header_img.png";
-import group_profiles from "./group_profiles.png";
-import profile_pic from "./profile_pic.png";
-import contact_image from "./contact_image.png";
 import about_image from "./about_image.png";
-import logo from "./logo.svg";
-import dropdown_icon from "./dropdown_icon.svg";
-import menu_icon from "./menu_icon.svg";
-import cross_icon from "./cross_icon.png";
-import chats_icon from "./chats_icon.svg";
-import verified_icon from "./verified_icon.svg";
-import arrow_icon from "./arrow_icon.svg";
-import info_icon from "./info_icon.svg";
-import upload_icon from "./upload_icon.png";
-import stripe_logo from "./stripe_logo.png";
-import razorpay_logo from "./razorpay_logo.png";
-
 import about_image_1 from "./about_img_1.jpg";
 import about_image_2 from "./about_img_2.jpg";
 import about_image_3 from "./about_img_3.jpg";
+
+import appointment_img from "./appointment_img.png";
+import arrow_icon from "./arrow_icon.svg";
+import chats_icon from "./chats_icon.svg";
+import contact_image from "./contact_image.png";
+import cross_icon from "./cross_icon.png";
+import dropdown_icon from "./dropdown_icon.svg";
+import header_img from "./header_img.png";
+import info_icon from "./info_icon.svg";
+import logo from "./logo.svg";
+import menu_icon from "./menu_icon.svg";
+import profile_pic from "./profile_pic.png";
+import razorpay_logo from "./razorpay_logo.png";
+import section_img from "./section_img.png";
+import stripe_logo from "./stripe_logo.png";
+import upload_icon from "./upload_icon.png";
+import verified_icon from "./verified_icon.svg";
+import group_profiles from "./group_profiles.png";
 
 import doc1 from "./doc1.png";
 import doc2 from "./doc2.png";
@@ -75,6 +76,8 @@ export const assets = {
 
   razorpay_logo,
 
+  section_img,
+
   stripe_logo,
 
   upload_icon,
@@ -87,28 +90,35 @@ export const specialityData = [
   {
     speciality: "Dermatologist",
     image: Dermatologist,
+    description: "A dermatologist is a medical doctor who specializes in the diagnosis and treatment of skin, hair, and nail disorders.",
   },
   {
     speciality: "Gastroenterologist",
     image: Gastroenterologist,
+    description: "A gastroenterologist is a medical doctor who specializes in the diagnosis and treatment of disorders related to the digestive system.",
   },
   {
     speciality: "General physician",
     image: General_physician,
+    description: "A general physician is a medical doctor who provides primary care to patients, diagnosing and treating a wide range of medical conditions.",
   },
   {
     speciality: "Gynecologist",
     image: Gynecologist,
+    description: "A gynecologist is a medical doctor who specializes in the diagnosis and treatment of disorders related to the female reproductive system.",
   },
   {
     speciality: "Pediatricians",
     image: Pediatricians,
+    description: "A pediatrician is a medical doctor who specializes in the diagnosis and treatment of disorders related to infants, children, and adolescents.",
   },
   {
     speciality: "Neurologist",
     image: Neurologist,
+    description: "A neurologist is a medical doctor who specializes in the diagnosis and treatment of disorders related to the nervous system.",
   },
 ];
+
 
 // Exporting doctors data
 export const doctors = [

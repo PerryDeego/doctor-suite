@@ -1,23 +1,24 @@
 import React, { useContext, useState } from "react";
 import { AppContext } from "../context/AppContext";
 import { NavLink, useNavigate } from "react-router-dom";
-import { FaHome } from "react-icons/fa"; // Import the FaHome icon
-import { MdSupport, MdLocationOn, MdCall } from "react-icons/md"; // Importing Material Design icons
+import { FaHome } from "react-icons/fa"; 
+import { MdSupport, MdLocationOn, MdCall } from "react-icons/md"; 
 
 const NavBar = () => {
-  const { assets } = useContext(AppContext);
-  const navigate = useNavigate();
-  const [showProfileMenu, setShowProfileMenu] = useState(false);
-  const [showMobileMenu, setShowMobileMenu] = useState(false);
-  const [token] = useState(true); // Assuming token is always true for this example
+  const { assets } = useContext(AppContext); // Access assets from context
+  const navigate = useNavigate(); 
+  const [showProfileMenu, setShowProfileMenu] = useState(false); // State for profile menu visibility
+  const [showMobileMenu, setShowMobileMenu] = useState(false); // State for mobile menu visibility
+  const [ token ] = useState(true); // Placeholder for authentication token
 
-  const toggleProfileMenu = () => setShowProfileMenu((prev) => !prev);
-  const toggleMobileMenu = () => setShowMobileMenu((prev) => !prev);
+  // Toggle functions for menus
+  const toggleProfileMenu = () => setShowProfileMenu(prev => !prev);
+  const toggleMobileMenu = () => setShowMobileMenu(prev => !prev);
 
   return (
     <div>
-      {/* Top Bar Info */}
-      <div className="hidden md:flex items-center justify-between px-4 py-2 text-sm text-indigo-600 bg-gray-100">
+      {/* Top Bar with Contact Information */}
+      <div className="hidden md:flex items-center justify-between px-4 py-2 text-sm text-primary bg-gray-100">
         <a href="mailto:support@gmail.com" className="flex items-center">
           <MdSupport className="mr-2" />
           support@doctorsuites.com
@@ -35,13 +36,17 @@ const NavBar = () => {
         </a>
       </div>
       
+      {/* Navigation Bar */}
       <nav className="flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400">
+        {/* Logo that navigates to home */}
         <img 
           className="w-44 cursor-pointer" 
           src={assets.logo} 
           alt="logo" 
           onClick={() => navigate('/')} 
         />
+
+        {/* Navigation Links */}
         <ul className="hidden md:flex items-start gap-5 font-medium relative">
           {["/", "/DOCTORS", "/CONTACT", "/ABOUT"].map((path, index) => (
             <NavLink 
@@ -55,14 +60,14 @@ const NavBar = () => {
                 }`
               }
             >
-              {path === '/' ? <FaHome className="mr-2 color-primary" style={{ color: '#1F51FF' }} /> : null}
+              {/* Home icon for the home link */}
+              {path === '/' ? <FaHome className="mr-2 color-primary" style={{ color: '#1e90ff' }} /> : null}
               {path.replace('/', '') || 'HOME'}
-              {({ isActive }) => isActive && (
-                <span className="absolute bottom-[-4px] left-0 w-full h-[2px] bg-gray"></span>
-              )}
             </NavLink>
           ))}
         </ul>
+
+        {/* User Profile / Login Button */}
         <div className="flex items-center gap-4">
           {token ? (
             <div className="flex items-center gap-2 cursor-pointer relative group" onClick={toggleProfileMenu}>
@@ -71,17 +76,19 @@ const NavBar = () => {
                 src={assets.profile_pic}
                 alt="profile pic"
               />
+              {/* Profile Menu */}
               {showProfileMenu && (
                 <div className="absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20">
-                  <div className="min-w-48 bg-blue-100 rounded flex flex-col gap-4 p-4">
-                    <p className="hover:text-black cursor-pointer" onClick={() => navigate('/my-profile')}>My Profile</p>
-                    <p className="hover:text-black cursor-pointer" onClick={() => navigate('/my-appointments')}>My Appointments</p>
-                    <p className="hover:text-black cursor-pointer" onClick={() => navigate('/login')}>Logout</p>
+                  <div className="min-w-48 bg-primary-gradient rounded flex flex-col gap-4 p-4">
+                    <p className="hover:text-white cursor-pointer" onClick={() => navigate('/my-profile')}>My Profile</p>
+                    <p className="hover:text-white cursor-pointer" onClick={() => navigate('/my-appointments')}>My Appointments</p>
+                    <p className="hover:text-white cursor-pointer" onClick={() => navigate('/login')}>Logout</p>
                   </div>
                 </div>
               )}
             </div>
           ) : (
+            // Button to create an account if not logged in
             <button
               className="bg-primary text-white px-8 py-3 rounded-full font-light hidden md:block"
               onClick={() => navigate("/login")}
@@ -89,7 +96,14 @@ const NavBar = () => {
               Create account
             </button>
           )}
-          <img className="w-6 md:hidden" src={assets.menu_icon} alt="menu icon" onClick={toggleMobileMenu} />
+          
+          {/* Mobile Menu Icon */}
+          <img 
+            className="w-6 md:hidden" 
+            src={assets.menu_icon} 
+            alt="menu icon" 
+            onClick={toggleMobileMenu} 
+          />
         </div>
       </nav>
 
@@ -110,6 +124,7 @@ const NavBar = () => {
                 }
                 onClick={() => setShowMobileMenu(false)} // Close menu on item click
               >
+                {/* Home icon for mobile view */}
                 {path === '/' ? <FaHome className="mr-2 color-primary" style={{ color: '#1F51FF' }} /> : null}
                 {path.replace('/', '') || 'HOME'}
               </NavLink>

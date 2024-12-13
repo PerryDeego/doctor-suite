@@ -22,14 +22,18 @@ const About = () => {
   return (
     <div id="about" className="about-box py-10">
       <div className="container mx-auto">
+        {/* Header Section */}
         <div className="text-center mb-16">
           <p className="mt-4 text-sm leading-7 text-gray-500 font-regular uppercase">About Us</p>
-          <h2 className="text-4xl sm:text-5xl leading-normal font-extrabold tracking-tight text-gray-900">Welcome to <span className="text-primary">Doctor Suites</span></h2>
+          <h2 className="text-4xl sm:text-5xl leading-normal font-extrabold tracking-tight text-gray-900">
+            Welcome to <span className="text-primary">Doctor Suites</span>
+          </h2>
           <p className="text-lg text-gray-600 mt-4">
             Where a diverse range of medical professionals provide specialized care tailored to meet the unique needs of each patient.
           </p>
         </div>
 
+        {/* Image Carousel and Description */}
         <div className="flex flex-col lg:flex-row items-center mb-12">
           <div className="lg:w-1/2 p-4">
             <div className="border-2 border-primary shadow-lg overflow-hidden rounded-lg">
@@ -53,46 +57,65 @@ const About = () => {
             </p>
             <a
               href="#"
-              className="new-btn-d inline-block px-6 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition duration-300"
+              className="new-btn-d inline-block px-6 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-primary-gradient hover:text-white transition duration-300"
             >
               Read More
             </a>
           </div>
         </div>
+{/* About Us Section */}
+<h2 className="text-3xl text-center font-semibold">Why Choose Us</h2>
+<div className="aboutus-section py-24 bg-gray-50">
+  <div className="container mx-auto flex flex-wrap -mx-4">
+    {/* About Us Text */}
+    <div className="md:w-1/3 sm:w-1/2 w-full px-4 mb-6 flex flex-col">
+      <div className="aboutus p-4 border border-gray-200 rounded-lg shadow-md flex-grow bg-white">
+        <h2 className="aboutus-title text-xl font-bold uppercase mb-4">About Us</h2>
+        <p className="aboutus-text text-gray-600 text-sm mb-4">
+          At Doctor Suites, we are dedicated to providing exceptional healthcare services tailored to the unique needs of our patients. Our facility brings together a diverse range of medical specialists, ensuring comprehensive care under one roof. With a commitment to excellence and patient satisfaction, we strive to create a welcoming environment for all.
+        </p>
+        <a
+          href="#"
+          className="aboutus-more inline-block border border-primary rounded-full text-primary font-bold px-[20px] py-[7px] uppercase hover:bg-primary-gradient hover:text-white transition duration-300"
+        >
+          Read More
+        </a>
+      </div>
+    </div>
 
-        {/* ---- About Us Section ---- */}
-        <section className="aboutus-section py-24 bg-gray-50">
-          <div className="container mx-auto flex flex-wrap -mx-4">
-            {/* About Us Text */}
-            <div className="md:w-1/3 sm:w-1/2 w-full px-4 mb-6 flex flex-col">
-              <div className="aboutus p-4 border border-gray-200 rounded-lg shadow-md flex-grow bg-white">
-              <h2 className="aboutus-title text-xl font-bold uppercase mb-4">About Us</h2>
-                
-                <p className="aboutus-text text-gray-600 text-sm mb-4">Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
-                <a href="#" className="aboutus-more inline-block border border-yellow-400 rounded-full text-yellow-400 font-bold px-[20px] py-[7px] uppercase hover:bg-yellow-400 hover:text-white transition duration-300">Read More</a>
-              </div>
-            </div>
-
-            {/* Features Section */}
-            <div className="md:w-2/3 w-full px-4 space-y-6">
-              {['Work with heart', 'Reliable services', 'Great support'].map((title, index) => (
-                <div key={index} className="feature-box flex items-start space-x-4 p-2 border border-gray-200 rounded-lg shadow-md bg-white">
-                  <span className="icon bg-white text-yellow-400 rounded-full flex items-center justify-center h-[70px] w-[70px] border border-yellow-400">
-                    {/* Example icon; replace with an actual icon component */}
-                    &#9889;
-                  </span>
-                  <div className="feature-content flex-grow">
-                    <h4 className="text-black font-semibold">{title}</h4>
-                    <p className="text-gray-600 text-sm">Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae.</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
+    {/* Features Section */}
+    <div className="md:w-2/3 w-full px-4 space-y-6">
+      {[
+        {
+          title: 'Work with Heart',
+          description: 'Our team is passionate about healthcare and dedicated to making a positive impact on our patients’ lives. We treat each patient with compassion and respect.'
+        },
+        {
+          title: 'Reliable Services',
+          description: 'We offer a wide range of medical services, ensuring that you receive the care you need when you need it. Our specialists are here to provide reliable and effective treatment.'
+        },
+        {
+          title: 'Great Support',
+          description: 'From the moment you walk through our doors, our friendly staff is here to support you. We prioritize open communication and ensure that all your questions are answered.'
+        }
+      ].map((feature, index) => (
+        <div key={index} className="feature-box flex items-start space-x-4 p-2 border border-gray-200 rounded-lg shadow-md bg-white">
+          <span className="icon bg-white text-yellow-400 rounded-full flex items-center justify-center h-[70px] w-[70px] border border-primary">
+            {/* Example icon; replace with an actual icon component */}
+            &#9889;
+          </span>
+          <div className="feature-content flex-grow">
+            <h4 className="text-black font-semibold">{feature.title}</h4>
+            <p className="text-gray-600 text-sm">{feature.description}</p>
           </div>
-        </section>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
 
-        {/* ---- Testimonials Section ---- */}
+
+        {/* Testimonials Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 rounded bg-primary-gradient p-6">
           {[...Array(3)].map((_, index) => (
             <div key={index} className="text-center p-4 bg-white rounded-lg shadow-md">

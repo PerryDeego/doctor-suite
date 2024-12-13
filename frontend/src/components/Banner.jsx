@@ -22,6 +22,7 @@ const Banner = () => {
           alt="appointment"
         />
       </div>
+      <hr />
     </div>
   );
 };

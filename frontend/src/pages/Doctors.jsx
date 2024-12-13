@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 const Doctors = () => {
     const { doctors, specialties } = useContext(AppContext);
     const [filterDoc, setFilterDoc] = useState([]);
-    const [showFilter, setShowFilter] = useState(false); // Changed to boolean
-    const [selectedSpecialty, setSelectedSpecialty] = useState(null); // Track currently selected specialty
+    const [showFilter, setShowFilter] = useState(false); 
+    const [selectedSpecialty, setSelectedSpecialty] = useState(null);
     const navigate = useNavigate();
 
     // Function to filter doctors based on the selected specialty
@@ -26,10 +26,8 @@ const Doctors = () => {
     // Function to handle clicks on specialty options
     const handleSpecialtyClick = (specialty) => {
         if (selectedSpecialty === specialty) {
-            // If already filtered by this specialty, clear the selection
             setSelectedSpecialty(null);
         } else {
-            // Otherwise, filter by the selected specialty
             setSelectedSpecialty(specialty);
             navigate(`/doctors/${specialty}`);
         }
@@ -42,19 +40,48 @@ const Doctors = () => {
             </h2>
             <p className="text-gray-600">Browse through our experienced doctor specialties</p>
             <div className="flex flex-col sm:flex-row items-start gap-5 mt-5">
+                
                 {/* Specialty selection section */}
-                <button 
-                    className={`border rounded text-indigo-600 p-2 transition-all sm:hidden ${showFilter ? 'bg-primary-gradient text-white' : ''}`} 
-                    onClick={() => setShowFilter(prev => !prev)}
-                >
-                    Filter Specialty Here
-                </button>
-                {showFilter && ( // Show specialties only when showFilter is true
-                    <div className="flex flex-col gap-4 text-sm text-gray-600">
+                <div className={`flex flex-col sm:flex-row items-start gap-5`}>
+                    {/* Always show specialties on larger screens */}
+                    <div className={`hidden sm:flex flex-col gap-4 text-sm text-gray-600`}>
+                    {/* Button for large view (read-only) */}
+                <div className="hidden md:block mb-4">
+                    <button 
+                        className={`border rounded text-primary p-2 transition-all ${selectedSpecialty ? 'bg-primary-gradient text-white' : ''}`} 
+                        disabled={true} // Make it read-only in large view
+                    >
+                        Filter Specialty Here
+                    </button>
+                </div>
+
                         {specialties.map((spec) => (
                             <p
                                 key={spec}
-                                className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer hover:text-primary ${selectedSpecialty === spec ? "bg-indigo-100 text-black" : ""}`}
+                                className={`w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer hover:text-primary ${selectedSpecialty === spec ? "bg-indigo-100 text-black" : ""}`}
+                                onClick={() => handleSpecialtyClick(spec)}
+                            >
+                                {spec}
+                            </p>
+                        ))}
+                    </div>
+
+                    {/* Button for mobile view */}
+                    <button 
+                        className={`border rounded text-primary p-2 transition-all sm:hidden ${showFilter ? 'bg-primary-gradient text-white' : ''}`} 
+                        onClick={() => setShowFilter(prev => !prev)}
+                    >
+                        Filter Specialty Here
+                    </button>
+                </div>
+
+                {/* Show specialties only when showFilter is true for mobile view */}
+                {showFilter && (
+                    <div className="flex flex-col gap-4 text-sm text-gray-600 sm:hidden">
+                        {specialties.map((spec) => (
+                            <p
+                                key={spec}
+                                className={`w-[94vw] pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer hover:text-primary ${selectedSpecialty === spec ? "bg-indigo-100 text-black" : ""}`}
                                 onClick={() => handleSpecialtyClick(spec)}
                             >
                                 {spec}
@@ -62,7 +89,7 @@ const Doctors = () => {
                         ))}
                     </div>
                 )}
-
+                
                 {/* Doctors listing section */}
                 <div className="w-full grid grid-cols-auto gap-4 gap-y-6">
                     {filterDoc.length > 0 ? (

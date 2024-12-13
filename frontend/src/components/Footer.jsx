@@ -1,15 +1,23 @@
 import React, { useContext } from "react";
 import { AppContext } from "../context/AppContext";
+import { MdLocationOn, MdCall, MdEmail, MdTimer, MdArrowForward } from "react-icons/md"; // Importing icons
 
 const Footer = () => {
-
-  const { assets } = useContext( AppContext );
+  const { assets } = useContext(AppContext);
   const currentDate = new Date().getFullYear();
 
-  const companyLinks = ["Home", "Contact Us", "About Us", "Privacy Policy"];
+  const companyLinks = [
+    { text: "Home", icon: <MdArrowForward className="text-primary" /> },
+    { text: "Contact Us", icon: <MdArrowForward className="text-primary" /> },
+    { text: "About Us", icon: <MdArrowForward className="text-primary" /> },
+    { text: "Privacy Policy", icon: <MdArrowForward className="text-primary" /> },
+  ];
+
   const contactInfo = [
-    "Phone: +1 656-555-7849",
-    "Email: services@specialist.com",
+    { icon: <MdLocationOn className="text-primary" />, text: "542B NS, Medi Town, Worldwide Country" },
+    { icon: <MdCall className="text-primary" />, text: "+1 656-555-7849" },
+    { icon: <MdEmail className="text-primary" />, text: "services@specialist.com" },
+    { icon: <MdTimer className="text-primary" />, text: "Mon - Sat : 9am to 6pm" },
   ];
 
   return (
@@ -24,7 +32,7 @@ const Footer = () => {
             requirements. By scheduling an appointment with one of the best
             professionals in the industry, you gain access to specialized
             knowledge and experience that can significantly enhance the outcomes
-            of your endeavors. 
+            of your endeavors.
           </p>
         </div>
 
@@ -32,18 +40,24 @@ const Footer = () => {
         <div>
           <p className="text-xl text-primary font-medium mb-5">COMPANY</p>
           <ul className="flex flex-col gap-2 text-gray-600">
-            {companyLinks.map((link, index) => (
-              <li key={index}>{link}</li>
+            {companyLinks.map((link) => (
+              <li key={link.id} className="flex items-center">
+                {link.icon}
+                <span className="ml-2">{link.text}</span>
+              </li>
             ))}
           </ul>
         </div>
 
         {/* Right Section */}
         <div>
-          <p className="text-xl  text-primary font-medium mb-5">GET IN TOUCH</p>
+          <p className="text-xl text-primary font-medium mb-5">GET IN TOUCH</p>
           <ul className="flex flex-col gap-2 text-gray-600">
-            {contactInfo.map((info, index) => (
-              <li key={index}>{info}</li>
+            {contactInfo.map((info) => (
+              <li key={info.id} className="flex items-center">
+                {info.icon}
+                <span className="ml-2">{info.text}</span>
+              </li>
             ))}
           </ul>
         </div>
@@ -52,7 +66,7 @@ const Footer = () => {
       {/* Copyright Information */}
       <div>
         <hr />
-        <p className="py-5 text-sm text-center">
+        <p className="py-5 text-sm text-center text-primary">
           Copyright &copy; {currentDate} specialist - All Rights Reserved
         </p>
       </div>

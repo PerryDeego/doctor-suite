@@ -15,9 +15,7 @@ connectCloudinary();
 app.use(express.json());
 app.use(cors());
 
-
-// ----- API endpoints
-// ------ Call to localhost:8000/api/admin/add-doctor
+// ----- API endpoints ------ Call to localhost:8000/api/admin/add-doctor
 app.use('/api/admin', adminRouter);
 
 app.get('/', (req, res) => {

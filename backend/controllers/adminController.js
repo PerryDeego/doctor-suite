@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import validator from 'validator';
 import doctorModel from '../models/doctorModel.js'; 
 
-const addDoctor = async (req, res) => {
+const addDoctor = async ( req, res ) => {
     try {
         const { 
             name, 
@@ -97,9 +97,9 @@ const addDoctor = async (req, res) => {
         // Upload image using Cloudinary storage
         let imageURL = null;
         
-        if (profileImage) {
+        if ( profileImage ) {
             try {
-                const imageUpload = await cloudinary.uploader.upload(profileImage.path, { resource_type: 'image' });
+                const imageUpload = await cloudinary.uploader.upload( profileImage.path, { resource_type: 'image' });
                 imageURL = imageUpload.secure_url;
             } catch (uploadError) {
                 console.error('Cloudinary upload error:', uploadError);
@@ -117,7 +117,7 @@ const addDoctor = async (req, res) => {
             degree,
             experience,
             about,
-            address:  JSON.stringify(address), 
+            address:  JSON.stringify( address ), 
             available,
             fees,
             date: Date.now(), // Set current date
@@ -140,13 +140,18 @@ const adminLogin = async (req, res) => {
     try {
         const { email, password } = req.body;
 
+        // Check if email or password is missing
+        if (!email || !password) {
+            return res.status(400).json({ message: "Email and password are required." });
+        }
+
         // Check if provided credentials match the environment variables
         if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
             // Sign a JWT token with a structured payload
             const token = jwt.sign({ email }, process.env.JWT_SECRET_KEY, { expiresIn: '15m' });
 
             // Send success response with token
-            return res.status(200).json({ message: 'Login successfully.', token });
+            return res.status(200).json({ message: 'Welcome, you are logged in.', token });
         } else {
             // Invalid credentials response
             return res.status(401).json({ message: 'Invalid credentials provided.' });
@@ -157,5 +162,6 @@ const adminLogin = async (req, res) => {
         res.status(500).json({ message: 'Error during login', error: error.message });
     }
 };
+
 
 export { addDoctor, adminLogin };

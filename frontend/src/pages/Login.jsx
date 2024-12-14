@@ -1,174 +1,87 @@
 import React, { useState } from 'react';
-import { assets } from "../assets/assets_frontend/assets";
-import { BsFillPeopleFill } from "react-icons/bs";
-import { FaUser, FaEnvelope, FaPhone, FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaLock } from 'react-icons/fa'; // Importing icons
 
-const MyProfile = () => {
-  const [isEdit, setIsEdit] = useState(false);
-  const [userInfo, setUserInfo] = useState({
-    name: "Admin user",
-    image: assets.profile_pic,
-    email: "adminuser@support.com",
-    phone: "+1-757-864-4874",
-    address: {
-      line1: "14th NW Greengrass Ave",
-      line2: "Pastures, Australia"
-    },
-    gender: "Male",
-    dob: "1990-01-01"
-  });
+const Login = () => {
+  const [isLogin, setIsLogin] = useState(true);
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleEditToggle = () => {
-    setIsEdit(!isEdit);
-  };
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
+    if (isLogin) {
+      console.log('Logging in:', { username, password });
+      // Add your login logic here
+    } else {
+      console.log('Registering:', { username, email, password });
+      // Add your registration logic here
+    }
+  }; // Closing bracket added here
 
   return (
-    <div className='text-center py-10'>
-      <h2 className="text-4xl sm:text-5xl leading-normal font-extrabold tracking-tight text-gray-900">
-        User <span className="text-primary">Profile</span>
-      </h2>
-
-      <div className="max-w-md mx-auto mt-8">
-        <div className="bg-white shadow-lg rounded-lg p-6">
-          <div className="flex flex-col items-center">
-            <img
-              src={userInfo.image}
-              alt="Profile of Admin user"
-              className="w-32 h-32 rounded-full border-2 border-gray-300 mb-4"
+    <div className="flex justify-center items-center min-h-screen bg-primary-gradient rounded-lg">
+      <div className="container w-full max-w-md bg-white rounded-lg shadow-lg p-8">
+        <h1 className="text-3xl font-bold text-center mb-6">{isLogin ? 'Login' : 'Registration'}</h1>
+        <form onSubmit={onSubmitHandler}>
+          <div className="mb-4 relative">
+            <FaUser className="absolute left-3 top-3 text-gray-400" />
+            <input 
+              type="text" 
+              placeholder="Username" 
+              required 
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="w-full p-3 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+              aria-label="Username"
             />
-
-            {/* Editable Name */}
-            <div className="flex items-center mb-4 w-full">
-              <FaUser className="mr-2 text-gray-600" />
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 w-1/3">Name</label>
-              {isEdit ? (
-                <input
-                  id="name"
-                  type="text"
-                  value={userInfo.name}
-                  onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
-                  className="border p-2 w-2/3 rounded-md"
-                />
-              ) : (
-                <h2 className="text-xl font-semibold w-2/3">{userInfo.name}</h2>
-              )}
-            </div>
-
-            {/* Divider */}
-            <hr className="w-full my-4 border-gray-300" />
-
-            {/* Email */}
-            <div className="mb-4 relative w-full">
-              <FaEnvelope className="absolute left-3 top-3 text-gray-400" />
-              <input
-                type="email"
-                value={userInfo.email}
-                onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })}
-                placeholder="Email"
-                className={`w-full p-3 pl-10 border ${isEdit ? 'border-gray-300' : 'border-transparent'} rounded-lg focus:outline-none focus:ring focus:ring-blue-300`}
-                disabled={!isEdit}
-              />
-            </div>
-
-            {/* Phone */}
-            <div className="mb-4 relative w-full">
-              <FaPhone className="absolute left-3 top-3 text-gray-400" />
-              <input
-                type="tel" // Changed to 'tel' for better semantics
-                value={userInfo.phone}
-                onChange={(e) => setUserInfo({ ...userInfo, phone: e.target.value })}
-                placeholder="Phone"
-                className={`w-full p-3 pl-10 border ${isEdit ? 'border-gray-300' : 'border-transparent'} rounded-lg focus:outline-none focus:ring focus:ring-blue-300`}
-                disabled={!isEdit}
-              />
-            </div>
-
-            {/* Address */}
-            <div className="mb-4 w-full">
-              <FaMapMarkerAlt className="absolute left-3 top-3 text-gray-400" />
-              {isEdit ? (
-                <>
-                  <input
-                    type="text"
-                    value={userInfo.address.line1}
-                    onChange={(e) => setUserInfo({ ...userInfo, address: { ...userInfo.address, line1: e.target.value } })}
-                    className="border p-2 mb-1 w-full rounded-md"
-                    placeholder="Address Line 1"
-                  />
-                  <br />
-                  <input
-                    type="text"
-                    value={userInfo.address.line2}
-                    onChange={(e) => setUserInfo({ ...userInfo, address: { ...userInfo.address, line2: e.target.value } })}
-                    className="border p-2 w-full rounded-md"
-                    placeholder="Address Line 2"
-                  />
-                </>
-              ) : (
-                <>
-                  <p className="text-gray-600">{userInfo.address.line1}</p>
-                  <p className="text-gray-600">{userInfo.address.line2}</p>
-                </>
-              )}
-            </div>
-
-            {/* Divider */}
-            <hr className="w-full my-4 border-gray-300" />
-
-            {/* Gender */}
-            <div className="flex items-center mb-4 w-full">
-              <BsFillPeopleFill className="absolute left-3 top-3 text-gray-400" />
-              <label htmlFor="gender" className="block text-sm font-medium text-gray-700 w-1/3">Gender</label>
-              {isEdit ? (
-                <select
-                  id="gender"
-                  value={userInfo.gender}
-                  onChange={(e) => setUserInfo({ ...userInfo, gender: e.target.value })}
-                  className="border p-2 w-full rounded-md"
-                >
-                  <option value="">Select Gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                </select>
-              ) : (
-                <p className="text-gray-600 w-2/3">{userInfo.gender}</p>
-              )}
-            </div>
-
-            {/* Date of Birth */}
-            <div className="mb-4 relative w-full">
-              <FaCalendarAlt className="absolute left-3 top-3 text-gray-400" />
-              {isEdit ? (
-                <input
-                  type="date"
-                  value={userInfo.dob}
-                  onChange={(e) => setUserInfo({ ...userInfo, dob: e.target.value })}
-                  className="border p-2 w-full rounded-md"
-                />
-              ) : (
-                <p className="text-gray-600 w-2/3">{new Date(userInfo.dob).toLocaleDateString()}</p>
-              )}
-            </div>
           </div>
-
-          {/* Divider */}
-          <hr className="w-full my-4 border-gray-300" />
-
-          {/* Edit/Save Button */}
-          <button
-            onClick={handleEditToggle}
-            className={`mt-4 px-6 py-2 border 
-                        ${isEdit ? 'border-green' : 'border-blue'} 
-                        ${isEdit ? 'text-green' : 'text-blue'} 
-                        rounded-lg 
-                        hover:bg-${isEdit ? 'green' : 'blue'}600 hover:text-indigo transition duration-[300ms] w-full`}
+          {!isLogin && (
+            <div className="mb-4 relative">
+              <FaEnvelope className="absolute left-3 top-3 text-gray-400" />
+              <input 
+                type="email" 
+                placeholder="Email" 
+                required 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full p-3 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                aria-label="Email"
+              />
+            </div>
+          )}
+          <div className="mb-4 relative">
+            <FaLock className="absolute left-3 top-3 text-gray-400" />
+            <input 
+              type="password" 
+              placeholder="Password" 
+              required 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full p-3 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+              aria-label="Password"
+            />
+          </div>
+          {isLogin && (
+            <div className="mb-4 text-right">
+              <a href="#" className="text-sm text-blue-500 hover:underline">Forgot Password?</a>
+            </div>
+          )}
+          <button 
+            type="submit" 
+            className="w-full h-12 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200"
           >
-            {isEdit ? 'Save' : 'Edit'}
+            {isLogin ? 'Login' : 'Register'}
           </button>
-        </div>
+        </form>
+        <button 
+          className="mt-4 text-blue-500 hover:underline" 
+          onClick={() => setIsLogin(!isLogin)}
+        >
+          {isLogin ? 'Create an account' : 'Already have an account'}
+        </button>
       </div>
     </div>
   );
 };
 
-export default MyProfile;
+export default Login;

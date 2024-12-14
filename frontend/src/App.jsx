@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';  // Removed BrowserRouter import
+import { Route, Routes, useLocation } from 'react-router-dom'; // Import useLocation
 import About from './pages/About';
 import Appointment from './pages/Appointment';
 import Contact from './pages/Contact';
@@ -13,9 +13,12 @@ import Footer from './components/Footer';
 import BackToTop from './components/BackToTop';
 
 const App = () => {
+  const location = useLocation(); // Get the current location
+
   return (
     <div className='mx-4 sm:mx-[10%]'>
-      <NavBar />
+      {/* Conditionally render NavBar based on the current path */}
+      {location.pathname !== '/login' && <NavBar />}
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/about' element={<About />} />

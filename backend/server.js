@@ -4,6 +4,8 @@ import 'dotenv/config';
 import connectDB from './utils/mongodb.js';
 import connectCloudinary from './utils/cloudinary.js';
 import adminRouter from './routes/adminRoute.js';
+import doctorRouter from './routes/doctorRoute.js';
+import userRouter from './routes/userRouter.js';
 
 const app = express();
 // Define the server port, using environment variable or default to 8000
@@ -17,6 +19,8 @@ app.use(cors());
 
 // ----- API endpoints ------ Call to localhost:8000/api/admin/add-doctor
 app.use('/api/admin', adminRouter);
+app.use('/api/doctor', doctorRouter);
+app.use('/api/user', userRouter);
 
 app.get('/', (req, res) => {
     res.send('Test APIs');

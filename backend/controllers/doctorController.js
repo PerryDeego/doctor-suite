@@ -1,5 +1,5 @@
 
-const addDoctor = async (req, res) => {
+const doctorList = async (req, res) => {
     try {
         const { name, email, password, speciality, degree, experience, about, fees, address } = req.body;
         const profileImage = req.file;
@@ -15,4 +15,4 @@ const addDoctor = async (req, res) => {
     }
 };
 
-export { addDoctor };
+export { doctorList };

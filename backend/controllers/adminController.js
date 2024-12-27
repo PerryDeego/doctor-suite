@@ -5,12 +5,14 @@ import doctorModel from "../models/doctorModel.js";
 import { doctorSchema } from "../validation/validation.js"; // Import shared validation schema
 
 const addDoctor = async (req, res) => {
+
     try {
+
       // Validate the incoming request data
       const { error } = doctorSchema.validate(req.body);
   
       if (error) {
-        console.error("Validation error details:", error.details); // Log detailed error information
+        console.error("Validation error details:", error.details); // Log detailed error information for debugging
         return res
           .status(400)
           .json({ message: "Input validation failed!", errors: error.details });
@@ -24,7 +26,7 @@ const addDoctor = async (req, res) => {
         degree,
         experience,
         about,
-        address, // This should be an object
+        address, 
         available,
         fees,
       } = req.body;
@@ -65,7 +67,7 @@ const addDoctor = async (req, res) => {
         degree,
         experience,
         about,
-        address, // Keep this as an object
+        address,
         available,
         fees,
         date: Date.now(), // Store the current date as a timestamp
@@ -88,7 +90,7 @@ const addDoctor = async (req, res) => {
     }
   };
 
-// -------- Function to handle adminLogin
+// -------- API function to handle adminLogin
 const adminLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -107,7 +109,7 @@ const adminLogin = async (req, res) => {
     ) {
       // Sign a JWT token with a structured payload
       const token = jwt.sign({ email }, process.env.JWT_SECRET_KEY, {
-        expiresIn: "15m",
+        expiresIn: "30m",
       });
 
       // Send success response with token
@@ -125,4 +127,53 @@ const adminLogin = async (req, res) => {
   }
 };
 
-export { addDoctor, adminLogin };
+// --------- API to get doctor list
+const doctorList = async ( req, res ) => {
+
+  try {
+    const doctors = await doctorModel.find( {} ).select( '-password' );
+    res.json( { success: true, doctors } );
+  } catch ( error ) {
+    console.error(error); // Log the error for debugging
+    res
+      .status(500)
+      .json({ message: "Error during login", error: error.message });
+  }
+}
+
+// controllers/settingsController.js
+import Setting from '../models/settingModel.js'; // Assuming you have a model for settings
+
+// Get settings
+const getSettings = async (req, res) => {
+  try {
+    const settings = await Setting.findOne({}); // Fetch the settings from the database
+    res.json(settings); // Respond with the settings
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching settings", error: error.message });
+  }
+};
+
+//------ Update settings function
+const updateSettings = async (req, res) => {
+
+  try {
+
+    const updatedSettings = await Setting.findOneAndUpdate(
+      {},
+      req.body,
+      { new: true, upsert: true }
+    );
+
+    res.status(200).json(updatedSettings); // Respond with 200 OK
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+
+};
+
+
+export { addDoctor, adminLogin,  getSettings, doctorList, updateSettings  };

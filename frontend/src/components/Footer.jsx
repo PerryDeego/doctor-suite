@@ -67,7 +67,7 @@ const Footer = () => {
       <div>
         <hr />
         <p className="py-5 text-sm text-center text-primary">
-          Copyright &copy; {currentDate} specialist - All Rights Reserved
+          Copyright &copy; {currentDate} Doctors Suite  - All Rights Reserved
         </p>
       </div>
     </footer>

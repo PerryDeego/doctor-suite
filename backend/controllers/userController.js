@@ -80,7 +80,7 @@ const loginUser = async (req, res) => {
     if (!validator.isEmail(email)) {
       return res
         .status(400)
-        .json({ message: "Invalid email format - Format: email@support.com" });
+        .json({ message: "Invalid email format - Format: [email@domain.com]" });
     }
 
     // Find the user by email
@@ -97,7 +97,7 @@ const loginUser = async (req, res) => {
 
     // Generate a token
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
-      expiresIn: "1h",
+      expiresIn: "30m",
     });
 
     // Respond with success message and token
@@ -188,7 +188,7 @@ const updateProfile = async (req, res) => {
         .json({ message: "Gender must be 'male', or 'female'" });
     }
 
-    // Prepare the update object
+    // Prepare the update object data
     const updateData = {};
     if (name) updateData.name = name;
     if (email) updateData.email = email;

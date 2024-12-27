@@ -29,7 +29,7 @@ const AddDoctor = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Validate required fields
     if (
       !formData.doctorImg ||
@@ -46,14 +46,14 @@ const AddDoctor = () => {
     ) {
       return toast.error("All fields are required.");
     }
-  
+
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
       return toast.error("Email format is invalid - [example@email.com].");
     }
-  
+
     const dataToSend = new FormData();
     dataToSend.append("image", formData.doctorImg);
-    
+
     Object.entries(formData).forEach(([key, value]) => {
       if (key !== "doctorImg") {
         if (key === "address") {
@@ -66,18 +66,16 @@ const AddDoctor = () => {
         }
       }
     });
-  
+
     try {
       const response = await axios.post(
         `${backendURL}${endpoint}/add-doctor`,
         dataToSend,
-        {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        }
+        { headers: { Authorization: `Bearer ${accessToken}` } }
       );
-  
+
       const { success, message } = response.data;
-  
+
       if (success) {
         toast.success(message);
         resetForm(); // Clear form data
@@ -93,6 +91,7 @@ const AddDoctor = () => {
     }
   };
 
+  // Reset function
   const resetForm = () => {
     setFormData({
       name: "",
@@ -305,71 +304,71 @@ const AddDoctor = () => {
         {/* Address Fields */}
         <h2 className="text-lg font-semibold mb-2">Address</h2>
 
-        {/* Address Line 1 */}
-        <div className="mb-4">
-          <label className="block mb-2" htmlFor="line1">
-            Address 1
-          </label>
-          <input
-            type="text"
-            id="line1"
-            name="line1"
-            placeholder="Address Line 1"
-            value={formData.address.line1}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+        {/* Address Line 1 & Line 2 in a row */}
+        <div className="flex mb-4">
+          <div className="w-1/2 pr-2">
+            <label className="block mb-2" htmlFor="line1">
+              Address 1
+            </label>
+            <input
+              type="text"
+              id="line1"
+              name="line1"
+              placeholder="Address Line 1"
+              value={formData.address.line1}
+              onChange={handleChange}
+              required
+              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div className="w-1/2 pl-2">
+            <label className="block mb-2" htmlFor="line2">
+              Address 2
+            </label>
+            <input
+              type="text"
+              id="line2"
+              name="line2"
+              placeholder="Address Line 2"
+              value={formData.address.line2}
+              onChange={handleChange}
+              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
         </div>
 
-        {/* Address Line 2 */}
-        <div className="mb-4">
-          <label className="block mb-2" htmlFor="line2">
-            Address 2
-          </label>
-          <input
-            type="text"
-            id="line2"
-            name="line2"
-            placeholder="Address Line 2"
-            value={formData.address.line2}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-
-        {/* City */}
-        <div className="mb-4">
-          <label className="block mb-2" htmlFor="city">
-            City
-          </label>
-          <input
-            type="text"
-            id="city"
-            name="city"
-            placeholder="City"
-            value={formData.address.city}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-
-        {/* State */}
-        <div className="mb-4">
-          <label className="block mb-2" htmlFor="state">
-            State
-          </label>
-          <input
-            type="text"
-            id="state"
-            name="state"
-            placeholder="State"
-            value={formData.address.state}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+        {/* City & State in a row */}
+        <div className="flex mb-4">
+          <div className="w-1/2 pr-2">
+            <label className="block mb-2" htmlFor="city">
+              City
+            </label>
+            <input
+              type="text"
+              id="city"
+              name="city"
+              placeholder="City"
+              value={formData.address.city}
+              onChange={handleChange}
+              required
+              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div className="w-1/2 pl-2">
+            <label className="block mb-2" htmlFor="state">
+              State
+            </label>
+            <input
+              type="text"
+              id="state"
+              name="state"
+              placeholder="State"
+              value={formData.address.state}
+              onChange={handleChange}
+              required
+              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
         </div>
 
         {/* Zipcode */}

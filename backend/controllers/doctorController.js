@@ -1,13 +1,14 @@
+import doctorModel from "../models/doctorModel.js";
 
-const doctorList = async (req, res) => {
+const changeAvailability = async (req, res) => {
     try {
-        const { name, email, password, speciality, degree, experience, about, fees, address } = req.body;
-        const profileImage = req.file;
+        const { doctorId } = req.body;
 
-        console.log({ name, email, password, speciality, degree, experience, about, fees, address }, profileImage);
+        const doctorData = await doctorModel.findById( doctorId );
+        await doctorModel.findByIdAndUpdate( doctorId, { available: !doctorData.available} );
 
         // Send a success response
-        res.status(201).json({ message: 'Doctor added successfully' });
+        res.status(201).json({ message: 'Availability has changed.' });
 
     } catch (error) {
         console.error(error); // Log the error for debugging
@@ -15,4 +16,19 @@ const doctorList = async (req, res) => {
     }
 };
 
-export { doctorList };
+
+const doctorList = async () => {
+    try {
+
+        const doctors = await doctorModel.find( {}).select([ '-password', '-email' ])
+
+        // Send a success response
+        res.status(201).json({ message: 'List of Doctors.', doctors });
+
+    } catch (error) {
+        console.error(error); // Log the error for debugging
+        res.status(500).json({ message: 'Error adding doctor', error: error.message });
+    }
+};
+
+export { changeAvailability, doctorList };

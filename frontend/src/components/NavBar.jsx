@@ -5,15 +5,21 @@ import { FaHome } from "react-icons/fa";
 import { MdSupport, MdLocationOn, MdCall } from "react-icons/md"; 
 
 const NavBar = () => {
-  const { assets } = useContext(AppContext); // Access assets from context
   const navigate = useNavigate(); 
   const [showProfileMenu, setShowProfileMenu] = useState(false); // State for profile menu visibility
   const [showMobileMenu, setShowMobileMenu] = useState(false); // State for mobile menu visibility
-  const [ token ] = useState(true); // Placeholder for authentication token
 
+  const { accessToken, setAccessToken, assets } = useContext(AppContext);
+  
   // Toggle functions for menus
   const toggleProfileMenu = () => setShowProfileMenu(prev => !prev);
   const toggleMobileMenu = () => setShowMobileMenu(prev => !prev);
+
+  const logout = () => {
+    setAccessToken(null);
+    localStorage.removeItem('accessToken');
+    navigate('/login'); // Optionally redirect to the login page upon logout
+}
 
   return (
     <div>
@@ -68,7 +74,7 @@ const NavBar = () => {
 
         {/* User Profile / Login Button */}
         <div className="flex items-center gap-4">
-          {token ? (
+          {accessToken ? (
             <div className="flex items-center gap-2 cursor-pointer relative group" onClick={toggleProfileMenu}>
               <img
                 className="w-8 rounded-full"
@@ -81,7 +87,8 @@ const NavBar = () => {
                   <div className="min-w-48 bg-primary-gradient rounded flex flex-col gap-4 p-4">
                     <p className="hover:text-white cursor-pointer" onClick={() => navigate('/my-profile')}>My Profile</p>
                     <p className="hover:text-white cursor-pointer" onClick={() => navigate('/my-appointments')}>My Appointments</p>
-                    <p className="hover:text-white cursor-pointer" onClick={() => navigate('/login')}>Logout</p>
+
+                    <p className="hover:text-white cursor-pointer" onClick={logout}>Logout</p>
                   </div>
                 </div>
               )}
@@ -89,7 +96,7 @@ const NavBar = () => {
           ) : (
             // Button to create an account if not logged in
             <button
-              className="bg-primary text-white px-8 py-3 rounded-full font-light hidden hover:text-primary md:block"
+              className="bg-primary text-white px-8 py-3 rounded-full font-light hidden hover:bg-primary-gradient  md:block"
               onClick={() => navigate("/login")}
             >
               Create account

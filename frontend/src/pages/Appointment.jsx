@@ -1,22 +1,25 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import { assets } from "../assets/assets_frontend/assets";
 import DoctorsDivision from "../components/DoctorsDivision";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import Timer from '../components/Timer'; // Import the Timer component
+import { toast } from "react-toastify";
 
 const Appointment = () => {
   const { docId } = useParams();
-  const { currencySymbol, doctors } = useContext(AppContext);
+  const { accessToken, currencySymbol, doctors } = useContext(AppContext);
 
+  const navigate = useNavigate();
   // State variables
   const [docInfo, setDocInfo] = useState(null);
   const [docSlots, setDocSlots] = useState([]);
   const [slotIndex, setSlotIndex] = useState(0);
   const [slotTime, setSlotTime] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [currentTime, setCurrentTime] = useState(new Date()); // State for current time
 
   // Fetch doctor information based on docId
   const fetchDocInfo = () => {
@@ -69,10 +72,17 @@ const Appointment = () => {
     setDocSlots(allSlots);
   };
 
+  const bookAppointment = async () => {
+    if (!accessToken) {
+      toast.warn('Login to book an appointment');
+      return navigate('/login');
+    }
+  }
+
   // Fetch doctor info on component mount or when doctors list changes
   useEffect(() => {
     fetchDocInfo();
-  }, [doctors, docId]);
+  }, [doctors, docId] );
 
   // Get available slots when doctor info is retrieved
   useEffect(() => {
@@ -84,7 +94,7 @@ const Appointment = () => {
   // Update current time every second
   useEffect(() => {
     const timerId = setInterval(() => {
-      setCurrentTime(new Date());
+      setCurrentTime(new Date()); // Update the current time state
     }, 1000);
 
     return () => clearInterval(timerId); // Cleanup on unmount
@@ -174,7 +184,8 @@ const Appointment = () => {
         {/* Current Time Display */}
         <div className="text-center"> {/* Center the timer */}
           <h3 className="font-semibold mb-2">Current Time</h3> {/* Added margin bottom for spacing */}
-          <Timer /> {/* Include the Timer component here */}
+          {/* Displaying the current time */}
+          <Timer currentTime={currentTime} /> {/* Pass current time as prop if Timer requires it */}
         </div>
       </div>
 
@@ -215,7 +226,7 @@ const Appointment = () => {
       )}
 
       {/* Book appointment button */}
-      <button className="w-full sm:w-[40%] mt-14 bg-primary text-white py-2 px-4 rounded-full mx-auto block hover:bg-primary-gradient"> 
+      <button className="w-full sm:w-[40%] mt-14 bg-primary text-white py-2 px-4 rounded-full mx-auto block hover:bg-primary-gradient" onClick={bookAppointment}> 
         Book an Appointment
       </button>
 

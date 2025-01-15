@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 
-const DoctorsDivision = ({ speciality, docId }) => {
+const DoctorsDivision = ({ docId, speciality }) => {
   const { doctors } = useContext(AppContext);
   const [docsCategory, setDocsCategory] = useState([]);
   const navigate = useNavigate();

@@ -27,9 +27,9 @@ const Services = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full px-3 sm:px-0">
             {specialityData.length > 0 ? (
-              specialityData.map((item) => (
+              specialityData.map((item, index) => (
                 <Link
-                  key={item.id}
+                  key={item.id || index} // Use item.id if available, otherwise fallback to index
                   to={`/doctors/${item.speciality}`}
                   onClick={handleScrollToTop}
                   className="flex flex-col items-center text-sm cursor-pointer bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
@@ -48,7 +48,7 @@ const Services = () => {
                 </Link>
               ))
             ) : (
-              <p>No specialities available at the moment.</p>
+              <p className='text-lg text-center font-medium text-primary'>No specialities available at the moment.</p>
             )}
           </div>
         </div>

@@ -40,7 +40,7 @@ const Settings = () => {
     event.preventDefault(); // Prevent the form from refreshing the page
     try {
       await axios.put(
-        `${backendURL}${endpoint}/settings`, 
+        `${backendURL}${endpoint}/update-settings`, 
         settings, 
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );

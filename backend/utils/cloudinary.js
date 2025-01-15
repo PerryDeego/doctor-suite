@@ -1,5 +1,5 @@
 import pkg from 'cloudinary';
-const { v2 } = pkg; // Only destructure v2
+const { v2 } = pkg; 
 
 const connectCloudinary = async () => {
     v2.config({ // Use v2 for configuration

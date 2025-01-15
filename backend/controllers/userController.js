@@ -1,8 +1,11 @@
+// backend/controllers/userController.js
 import bcrypt from "bcrypt";
 import cloudinary from "cloudinary";
 import validator from "validator";
 import jwt from "jsonwebtoken";
 import userModel from "../models/userModel.js";
+import appointmentModel from '../models/appointmentModel.js';
+import { doctors } from "../../frontend/src/assets/assets_frontend/assets.js";
 
 // ------ API to register user
 const registerUser = async (req, res) => {
@@ -73,7 +76,7 @@ const loginUser = async (req, res) => {
     if (!email || !password) {
       return res
         .status(400)
-        .json({ message: "Email and password are required" });
+        .json({ message: `Email and password are required ${email}` });
     }
 
     // Validate email format
@@ -86,25 +89,29 @@ const loginUser = async (req, res) => {
     // Find the user by email
     const user = await userModel.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: "Invalid email or password" });
+      return res
+        .status(400)
+        .json({ message: "This user does not exist, please register." });
     }
 
     // Compare the provided password with the hashed password
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: "Invalid email or password" });
+
+    // Check if provided credentials match the environment variables
+    if (isMatch && user.email) {
+      // Sign a JWT token with a structured payload
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
+        expiresIn: "30m",
+      });
+
+      // Send success response with token
+      res.status(200).json({ message: "Welcome, you are logged in.", token });
+    } else {
+      res.status(401).json({ message: "Invalid credentials provided." });
     }
-
-    // Generate a token
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
-      expiresIn: "30m",
-    });
-
-    // Respond with success message and token
-    return res.status(200).json({ message: "Login successful", token });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error!" });
   }
 };
 
@@ -234,4 +241,59 @@ const updateProfile = async (req, res) => {
   }
 };
 
-export { registerUser, loginUser, getProfile, updateProfile };
+
+// ------ Book an appointment
+const bookAppointment = async (req, res) => {
+  const { userId, docId, slotDate, slotTime } = req.body;
+
+  // Validate required fields
+  if (!userId || !docId || !slotDate || !slotTime) {
+      return res.status(400).json({ message: 'All fields are required' });
+  }
+
+  try {
+      const docData = await doctorModel.findById(docId).select('-password');
+
+      if (!docData.available) {
+          return res.status(400).json({ message: 'This doctor is not available.' });
+      }
+
+      let slot_booked = docData.slot_booked;
+
+      // Check for available appointment slot
+      if (slot_booked[slotDate]) {
+          if (slot_booked[slotDate].includes(slotTime)) {
+              return res.status(400).json({ message: 'This slot is not available.' });
+          } else {
+              slot_booked[slotDate].push(slotTime);
+          }
+
+          const userData = await userModel.findById(userId).select('-password');
+          delete docData.slot_booked;
+
+          // Create a new appointment
+          const newAppointment = new appointmentModel({
+              userId,
+              docId,
+              userData,
+              docData,
+              amount: docData.fees,
+              slotDate,
+              slotTime,
+              date: Date.now()
+          });
+
+          // Save to database appointment
+          const savedAppointment = await newAppointment.save();
+          await doctorModel.findByIdAndUpdate(docId, { slot_booked });
+
+          res.status(201).json({ success: true, message: 'Appointment booked successfully.' });
+      }
+      
+  } catch (error) {
+      res.status(500).json({ message: error.message });
+  }
+};
+
+// Export all functions
+export { bookAppointment, loginUser , getProfile, registerUser , updateProfile };

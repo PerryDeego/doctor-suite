@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { assets } from "../assets/assets_frontend/assets";
+import React, { useEffect, useState, useContext } from "react";
+import { AppContext } from "../context/AppContext";
 
 const About = () => {
+  const { assets } = useContext(AppContext);
+
   const images = [
     { src: assets.about_image_1, alt: "About Image 1" },
     { src: assets.about_image_2, alt: "About Image 2" },
     { src: assets.about_image_3, alt: "About Image 3" },
+    { src: assets.about_image_4, alt: "About Image 4" },
+    { src: assets.about_image_5, alt: "About Image 5" },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);

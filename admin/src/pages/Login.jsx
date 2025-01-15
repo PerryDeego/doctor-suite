@@ -19,6 +19,7 @@ const Login = () => {
 
       // Check if data contains a token
       if (data.token) {
+        
         localStorage.setItem('accessToken', data.token);
         setAccessToken(data.token);
         toast.success('Login successful!');

@@ -3,8 +3,7 @@ import { AppContext } from "../context/AppContext";
 import { Link } from "react-router-dom";
 
 const SpecialityItems = () => {
-  const { specialityData } = useContext(AppContext) || { specialityData: [] }; // Default to an empty array
-
+  const { specialityData } = useContext(AppContext) || { specialityData: [] }; 
   // Function to scroll to the top of the page
   const handleScrollToTop = () => {
     window.scrollTo(0, 0); // Scroll to top when clicking a speciality
@@ -36,7 +35,7 @@ const SpecialityItems = () => {
             </Link>
           ))
         ) : (
-          <p>No specialities available at the moment.</p> // Message when no specialties are found
+          <p className='text-lg text-center font-medium text-primary'>No specialities available at the moment.</p>// Message when no specialties are found
         )}
       </div>
     </div>

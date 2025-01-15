@@ -111,7 +111,7 @@ const Doctors = () => {
                             </div>
                         ))
                     ) : (
-                        <p className="text-gray-500">No doctors found for this specialty.</p>
+                        <p className='text-lg text-center font-medium text-primary'>No doctors with that specialities available at the moment.</p>
                     )}
                 </div>
             </div>

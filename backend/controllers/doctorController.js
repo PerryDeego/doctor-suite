@@ -1,6 +1,7 @@
+// backend/controllers/doctorController.js
 import doctorModel from "../models/doctorModel.js";
 
-const changeAvailability = async (req, res) => {
+const changeAvailability = async ( req, res ) => {
     try {
         const { doctorId } = req.body;
 
@@ -17,18 +18,17 @@ const changeAvailability = async (req, res) => {
 };
 
 
-const doctorList = async () => {
+const doctorsList = async ( req, res ) => {
     try {
-
-        const doctors = await doctorModel.find( {}).select([ '-password', '-email' ])
-
-        // Send a success response
-        res.status(201).json({ message: 'List of Doctors.', doctors });
-
-    } catch (error) {
+        const doctors = await doctorModel.find({}).select( ['-password', '-email'] );
+        res.json( { success: true, doctors } );
+      } catch ( error ) {
         console.error(error); // Log the error for debugging
-        res.status(500).json({ message: 'Error adding doctor', error: error.message });
+        res
+          .status(500)
+          .json({ message: "Error loading doctors information.", error: error.message });
+      }
     }
-};
+    
 
-export { changeAvailability, doctorList };
+export { changeAvailability, doctorsList };

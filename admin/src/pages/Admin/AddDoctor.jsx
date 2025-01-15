@@ -27,8 +27,11 @@ const AddDoctor = () => {
     doctorImg: null,
   });
 
+  const [loading, setLoading] = useState(false); // Loading state
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading state
 
     // Validate required fields
     if (
@@ -40,15 +43,23 @@ const AddDoctor = () => {
       !formData.degree ||
       !formData.experience ||
       !formData.about ||
-      !formData.address ||
+      !formData.address.line1 ||
       !formData.available ||
       !formData.fees
     ) {
+      setLoading(false); // Reset loading state
       return toast.error("All fields are required.");
     }
 
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      setLoading(false); // Reset loading state
       return toast.error("Email format is invalid - [example@email.com].");
+    }
+
+    // Additional password validation
+    if (formData.password.length < 6) {
+      setLoading(false); // Reset loading state
+      return toast.error("Password must be at least 6 characters long.");
     }
 
     const dataToSend = new FormData();
@@ -57,7 +68,6 @@ const AddDoctor = () => {
     Object.entries(formData).forEach(([key, value]) => {
       if (key !== "doctorImg") {
         if (key === "address") {
-          // Append each field of the address object individually
           Object.entries(value).forEach(([addressKey, addressValue]) => {
             dataToSend.append(`address[${addressKey}]`, addressValue);
           });
@@ -78,6 +88,7 @@ const AddDoctor = () => {
 
       if (success) {
         toast.success(message);
+        scrollTo(0, 0);
         resetForm(); // Clear form data
       } else {
         toast.error(message);
@@ -88,6 +99,8 @@ const AddDoctor = () => {
         error.response?.data?.message ||
         "An error occurred while adding the doctor. Please try again.";
       toast.error(errorMessage);
+    } finally {
+      setLoading(false); // Reset loading state
     }
   };
 
@@ -426,9 +439,12 @@ const AddDoctor = () => {
         <div className="mb-4">
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            disabled={loading}
+            className={`w-full ${
+              loading ? "bg-gray-400" : "bg-blue-500"
+            } text-white p-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500`}
           >
-            Add Doctor
+            {loading ? "Adding..." : "Add Doctor"}
           </button>
         </div>
       </div>

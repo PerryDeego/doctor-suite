@@ -1,3 +1,4 @@
+// backend/models/doctorModel.js
 import mongoose from "mongoose";
 
 const doctorSchema = new mongoose.Schema({

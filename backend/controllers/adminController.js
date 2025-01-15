@@ -1,8 +1,10 @@
+// backend/controllers/adminController.js
 import bcrypt from "bcrypt";
 import cloudinary from "cloudinary";
 import jwt from "jsonwebtoken";
 import doctorModel from "../models/doctorModel.js";
 import { doctorSchema } from "../validation/validation.js"; // Import shared validation schema
+import Setting from '../models/settingModel.js'; 
 
 const addDoctor = async (req, res) => {
 
@@ -121,7 +123,7 @@ const adminLogin = async (req, res) => {
     }
   } catch (error) {
     console.error(error); // Log the error for debugging
-    res
+    return res
       .status(500)
       .json({ message: "Error during login", error: error.message });
   }
@@ -131,20 +133,17 @@ const adminLogin = async (req, res) => {
 const doctorList = async ( req, res ) => {
 
   try {
-    const doctors = await doctorModel.find( {} ).select( '-password' );
+    const doctors = await doctorModel.find({}).select( '-password' );
     res.json( { success: true, doctors } );
   } catch ( error ) {
     console.error(error); // Log the error for debugging
-    res
+   return res
       .status(500)
-      .json({ message: "Error during login", error: error.message });
+      .json({ message: "Error loading doctors information.", error: error.message });
   }
 }
 
-// controllers/settingsController.js
-import Setting from '../models/settingModel.js'; // Assuming you have a model for settings
-
-// Get settings
+// --------- Get settings
 const getSettings = async (req, res) => {
   try {
     const settings = await Setting.findOne({}); // Fetch the settings from the database
@@ -155,7 +154,7 @@ const getSettings = async (req, res) => {
   }
 };
 
-//------ Update settings function
+// ------ Update settings function
 const updateSettings = async (req, res) => {
 
   try {

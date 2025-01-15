@@ -8,7 +8,7 @@ const userAuth = async (req, res, next) => {
 
         // Check if access token is provided
         if ( !authorization || !authorization.startsWith('Bearer') ) {
-            return res.status(403).json({ message: "User not logged in - Please login again." });
+            return res.status(403).json({ message: "User Not Authorized - Please login!" });
         }
 
         const accessToken = authorization.split(' ')[1]; // Extract token
@@ -17,7 +17,7 @@ const userAuth = async (req, res, next) => {
         const decodedToken = jwt.verify(accessToken, process.env.JWT_SECRET_KEY);
 
         // Attach user information to request object for further use
-        req.user = decodedToken;
+        req.body.userId = decodedToken.id;
 
         // Proceed to the next middleware or route handler
         next();
@@ -34,7 +34,7 @@ const userAuth = async (req, res, next) => {
         }
 
         // General error response
-        res.status(500).json({ message: 'Error during authentication', error: error.message });
+        return res.status(500).json({ message: 'Error occurred during authentication', error: error.message });
     }
 };
 

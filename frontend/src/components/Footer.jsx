@@ -7,17 +7,17 @@ const Footer = () => {
   const currentDate = new Date().getFullYear();
 
   const companyLinks = [
-    { text: "Home", icon: <MdArrowForward className="text-primary" /> },
-    { text: "Contact Us", icon: <MdArrowForward className="text-primary" /> },
-    { text: "About Us", icon: <MdArrowForward className="text-primary" /> },
-    { text: "Privacy Policy", icon: <MdArrowForward className="text-primary" /> },
+    { id: 1, text: "Home", icon: <MdArrowForward className="text-primary" /> },
+    { id: 2, text: "Contact Us", icon: <MdArrowForward className="text-primary" /> },
+    { id: 3, text: "About Us", icon: <MdArrowForward className="text-primary" /> },
+    { id: 4, text: "Privacy Policy", icon: <MdArrowForward className="text-primary" /> },
   ];
 
   const contactInfo = [
-    { icon: <MdLocationOn className="text-primary" />, text: "542B NS, Medi Town, Worldwide Country" },
-    { icon: <MdCall className="text-primary" />, text: "+1 656-555-7849" },
-    { icon: <MdEmail className="text-primary" />, text: "services@specialist.com" },
-    { icon: <MdTimer className="text-primary" />, text: "Mon - Sat : 9am to 6pm" },
+    { id: 1, icon: <MdLocationOn className="text-primary" />, text: "542B NS, Medi Town, Worldwide Country" },
+    { id: 2, icon: <MdCall className="text-primary" />, text: "+1 656-555-7849" },
+    { id: 3, icon: <MdEmail className="text-primary" />, text: "services@specialist.com" },
+    { id: 4, icon: <MdTimer className="text-primary" />, text: "Mon - Sat : 9am to 6pm" },
   ];
 
   return (
@@ -67,7 +67,7 @@ const Footer = () => {
       <div>
         <hr />
         <p className="py-5 text-sm text-center text-primary">
-          Copyright &copy; {currentDate} Doctors Suite  - All Rights Reserved
+          Copyright &copy; {currentDate} Doctors Suite - All Rights Reserved
         </p>
       </div>
     </footer>

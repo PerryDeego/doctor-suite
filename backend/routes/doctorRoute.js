@@ -1,9 +1,10 @@
+// backend/routes/doctorRoute.js
 import express from 'express';
-import { doctorList } from '../controllers/doctorController.js';
+import { doctorsList } from '../controllers/doctorController.js';
 
 const doctorRouter = express.Router();
 
 // ----- Route for adding a doctor with image upload
-doctorRouter.post( '/list', doctorList );
+doctorRouter.get( '/doctors-list', doctorsList );
 
 export default doctorRouter;

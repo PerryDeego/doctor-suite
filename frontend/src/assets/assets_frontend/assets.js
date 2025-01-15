@@ -1,8 +1,10 @@
 // Asset imports
 import about_image from "./about_image.png";
-import about_image_1 from "./about_img_1.jpg";
-import about_image_2 from "./about_img_2.jpg";
-import about_image_3 from "./about_img_3.jpg";
+import about_image_1 from "./about_img_1.png";
+import about_image_2 from "./about_img_2.png";
+import about_image_3 from "./about_img_3.png";
+import about_image_4 from "./about_img_4.png";
+import about_image_5 from "./about_img_5.png";
 
 import appointment_img from "./appointment_img.png";
 import arrow_icon from "./arrow_icon.svg";
@@ -51,6 +53,9 @@ export const assets = {
   about_image_1,
   about_image_2,
   about_image_3,
+  about_image_4,
+  about_image_5,
+
   appointment_img,
   arrow_icon,
 
